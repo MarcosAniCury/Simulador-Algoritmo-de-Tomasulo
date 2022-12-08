@@ -1,5 +1,8 @@
-package main.java.app.Model;
-import main.java.app.Constants.Instructions;
+package app.Model;
+
+import java.util.Arrays;
+
+import app.Constants.Instructions;
 
 public class Instruction {
     private String instruction;
@@ -7,16 +10,21 @@ public class Instruction {
     private String option2;
     private String option3;
 
-    public Instruction(String instruction, String option1, String option2, String option3) {
+    public Instruction(String instruction, String option1, String option2, String option3) throws Exception {
         setInstruction(instruction);
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;    
     }
 
-    public void setInstruction(String instruction) {
-        if (Instructions.ALL_INSTRUCTIONS.contains(instruction.toLowerCase().trim())) {
-            this.instruction = instruction.toLowerCase().trim();
+    public void setInstruction(String instruction) throws Exception{
+        if (!Arrays.stream(Instructions.ALL_INSTRUCTIONS).anyMatch(item -> item.equals(instruction.toLowerCase().trim()))) {
+            throw new Exception("Instruction not exist");
         }
+        this.instruction = instruction.toLowerCase().trim();
+    }
+
+    public void printInstruction() {
+        System.out.println(instruction+" "+option1+" "+option2+" "+option3);
     }
 }

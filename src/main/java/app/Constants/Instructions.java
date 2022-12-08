@@ -1,4 +1,4 @@
-package main.java.app.Constants;
+package app.Constants;
 
 public class Instructions {
     //Logic
