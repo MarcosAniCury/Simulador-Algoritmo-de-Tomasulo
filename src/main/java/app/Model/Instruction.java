@@ -1,36 +1,22 @@
-package app.Model;
+package main.java.app.Model;
+import main.java.app.Constants.Instructions;
 
 public class Instruction {
-    //Logic
-    public static final String XOR = "xor";
-    public static final String OR = "or";
-    public static final String AND = "and";
+    private String instruction;
+    private String option1;
+    private String option2;
+    private String option3;
 
-    //Aritimetic
-    public static final String ADD = "add";
-    public static final String SUB = "sub";
-    
-    //Mult
-    public static final String MUL = "mul";
-    public static final String DIV = "div";
-    public static final String REM = "rem";
+    public Instruction(String instruction, String option1, String option2, String option3) {
+        setInstruction(instruction);
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;    
+    }
 
-    //Detour
-    public static final String BEQ = "beq";
-    public static final String BNE = "bne";
-    public static final String BLT = "blt";
-    public static final String BGE = "bge";
-
-    //Load - Store
-    public static final String LB = "lb";
-    public static final String LW = "lw";
-    public static final String SB = "sb";
-    public static final String SW = "sw";
-
-    //Arrays
-    public static final String[] LOGIC = {XOR, OR, AND};
-    public static final String[] ARITIMETIC = {ADD, SUB};
-    public static final String[] MULT = {MUL, DIV, REM};
-    public static final String[] DETOUR = {BEQ, BNE, BLT, BGE};
-    public static final String[] LOAD_STORE = {LB, LW, SB, SW};
+    public void setInstruction(String instruction) {
+        if (Instructions.ALL_INSTRUCTIONS.contains(instruction.toLowerCase().trim())) {
+            this.instruction = instruction.toLowerCase().trim();
+        }
+    }
 }
