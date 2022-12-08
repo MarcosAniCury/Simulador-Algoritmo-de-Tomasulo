@@ -6,12 +6,12 @@ import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 
+import app.Controller.TomasuloController;
+
 public class App{
     public static void main(String[] args){
-        //Arquive arquive = new Arquive("comands.txt");
-        //for (Instruction instruction : arquive.getAllInstructions()) {
-            //instruction.printInstruction();
-        //}
+        TomasuloController algorithm = new TomasuloController();
+        algorithm.runTomasulo();
 
         // Initialize Chromium.
         Engine engine = Engine.newInstance(
