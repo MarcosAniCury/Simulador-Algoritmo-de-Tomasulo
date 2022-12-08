@@ -1,5 +1,4 @@
 apply plugin: 'java'
-apply plugin: 'vscode'
 apply plugin: 'application'
 
 mainClassName = 'app.App'
