@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'app.App'
+
 
 sourceCompatibility = 17
 
@@ -9,8 +9,17 @@ repositories {
     maven { url = 'https://europe-maven.pkg.dev/jxbrowser/releases' }
 }
 
+ext {
+    jxBrowserVersion = '7.28.1'
+}
+
 dependencies {
-    implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:7.28.1"
+    implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:${jxBrowserVersion}"
+    implementation "com.teamdev.jxbrowser:jxbrowser-swing:${jxBrowserVersion}"
+}
+
+application {
+    mainClassName = 'app.App'   
 }
 
 jar {
