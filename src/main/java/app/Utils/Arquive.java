@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arquive {
-    List<Instruction> instructions;
+    private List<Instruction> instructions;
 
     public Arquive(String path) throws Exception {
         readArquive(path);
@@ -37,11 +37,8 @@ public class Arquive {
         }
     }
 
-    public Instruction getOneInstruction(int index) throws Exception {
-        if (index > instructions.size()) {
-            throw new Exception("index not exist");
-        }
-        return instructions.get(index);
+    public Instruction get() throws Exception {
+        return instructions.remove(0);
     }
 
     public Instruction[] getAllInstructions() {
