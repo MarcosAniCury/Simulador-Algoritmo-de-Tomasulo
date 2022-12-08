@@ -1,4 +1,4 @@
-package app.Constants;
+package Constants;
 
 public class BufferInstruction {
     public static final String STATE_ISSUE = "issue";

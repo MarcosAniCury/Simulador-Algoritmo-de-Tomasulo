@@ -1,8 +1,8 @@
-package app.Model;
+package Model;
 
 import java.util.List;
 
-import app.Constants.Definitions;
+import Constants.Definitions;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,9 @@
-package app.Model;
+package Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import app.Constants.Definitions;
+import Constants.Definitions;
 
 public class InstructionQueue {
     private List<Instruction> instructions;

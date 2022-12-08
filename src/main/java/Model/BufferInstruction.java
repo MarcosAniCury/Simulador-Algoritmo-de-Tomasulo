@@ -1,6 +1,6 @@
-package app.Model;
+package Model;
 
-import app.Constants.BufferInstruction.StateEnum;
+import Constants.BufferInstruction.StateEnum;
 
 public class BufferInstruction {
     private boolean busy;

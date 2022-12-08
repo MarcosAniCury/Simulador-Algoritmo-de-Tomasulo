@@ -3,23 +3,30 @@ apply plugin: 'application'
 
 
 
-sourceCompatibility = 17
+sourceCompatibility = 11
 
 repositories {
+    
+    mavenCentral()
     maven { url = 'https://europe-maven.pkg.dev/jxbrowser/releases' }
 }
 
 ext {
     jxBrowserVersion = '7.28.1'
+    guavaVersion = '31.1-jre' 
 }
 
 dependencies {
     implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:${jxBrowserVersion}"
     implementation "com.teamdev.jxbrowser:jxbrowser-swing:${jxBrowserVersion}"
+    implementation "com.google.guava:guava:${guavaVersion}"
+    
+
+
 }
 
 application {
-    mainClassName = 'app.App'   
+    mainClassName = 'App'   
 }
 
 jar {

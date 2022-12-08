@@ -1,10 +1,10 @@
-package app.Utils;
+package Utils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-import app.Model.Instruction;
+import Model.Instruction;
 
 import java.util.ArrayList;
 import java.util.List;

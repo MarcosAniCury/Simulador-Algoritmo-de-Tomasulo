@@ -1,9 +1,9 @@
-package app.Controller;
+package Controller;
 
-import app.Model.Instruction;
-import app.Model.InstructionQueue;
-import app.Model.ReorderBuffer;
-import app.Utils.Arquive;
+import Model.Instruction;
+import Model.InstructionQueue;
+import Model.ReorderBuffer;
+import Utils.Arquive;
 
 public class TomasuloController {
     public void runTomasulo() {

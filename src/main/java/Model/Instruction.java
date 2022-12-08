@@ -1,8 +1,8 @@
-package app.Model;
+package Model;
 
 import java.util.Arrays;
 
-import app.Constants.Instructions;
+import Constants.Instructions;
 
 public class Instruction {
     private String instruction;

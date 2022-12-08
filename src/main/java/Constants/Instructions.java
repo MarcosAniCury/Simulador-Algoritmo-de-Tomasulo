@@ -1,4 +1,4 @@
-package app.Constants;
+package Constants;
 
 public class Instructions {
     //Logic
