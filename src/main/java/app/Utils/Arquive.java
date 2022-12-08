@@ -1,7 +1,10 @@
-package app.Model;
+package app.Utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
+
+import app.Model.Instruction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +12,11 @@ import java.util.List;
 public class Arquive {
     List<Instruction> instructions;
 
-    public Arquive(String path) {
+    public Arquive(String path) throws Exception {
         readArquive(path);
     }
 
-    public void readArquive(String path) {
+    public void readArquive(String path) throws Exception {
         try {
             File file = new File(path);
             Scanner scanner = new Scanner(file);
@@ -28,8 +31,9 @@ public class Arquive {
                 instructions.add(new Instruction(line[0], options[0], options[1], options[2]));
             }
             scanner.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
+            throw new Exception("Error in arquive");
         }
     }
 

@@ -8,6 +8,11 @@ import com.teamdev.jxbrowser.engine.EngineOptions;
 
 public class App{
     public static void main(String[] args){
+        //Arquive arquive = new Arquive("comands.txt");
+        //for (Instruction instruction : arquive.getAllInstructions()) {
+            //instruction.printInstruction();
+        //}
+
         // Initialize Chromium.
         Engine engine = Engine.newInstance(
             EngineOptions.newBuilder(OFF_SCREEN)
