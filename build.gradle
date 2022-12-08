@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'vscode'
+apply plugin: 'application'
+
+mainClassName = 'app.App'
+
+sourceCompatibility = 17
+
+repositories {
+    maven { url = 'https://europe-maven.pkg.dev/jxbrowser/releases' }
+}
+
+dependencies {
+    implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:7.28.1"
+}
+
+jar {
+    archiveBaseName = 'gs-gradle'
+    archiveVersion =  '0.1.0'
+}
