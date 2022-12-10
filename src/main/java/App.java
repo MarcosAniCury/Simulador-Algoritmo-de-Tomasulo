@@ -15,6 +15,9 @@ import com.teamdev.jxbrowser.js.JsAccessible;
 import com.teamdev.jxbrowser.js.JsObject;
 import com.teamdev.jxbrowser.navigation.event.FrameLoadFinished;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
+
+import Controller.TomasuloController;
+
 import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.URL;
@@ -27,6 +30,8 @@ import javax.swing.WindowConstants;
 public final class App {
 
     public static void main(String[] args) {
+        TomasuloController tomasuloController = new TomasuloController();
+        tomasuloController.runTomasulo(null);
 
         Engine engine = Engine.newInstance(
                 EngineOptions.newBuilder(HARDWARE_ACCELERATED)

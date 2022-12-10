@@ -6,11 +6,16 @@ import Model.ReorderBuffer;
 import Utils.Arquive;
 
 public class TomasuloController {
-    public void runTomasulo() {
+    private static Arquive arquive;
+    private static InstructionQueue instructionQueue;
+    private static ReorderBuffer reorderBuffer;
+
+    public void runTomasulo(String path) {
         try {
-            Arquive arquive = new Arquive("comands.txt");
-            InstructionQueue instructionQueue = new InstructionQueue();
-            ReorderBuffer reorderBuffer = new ReorderBuffer();
+            RegisterController.defineRegisters();
+            TomasuloController.arquive = new Arquive("comands.txt");
+            TomasuloController.instructionQueue = new InstructionQueue();
+            TomasuloController.reorderBuffer = new ReorderBuffer();
 
             for (int i = 0; i < 1; i++) {
                 Instruction instructionArquive = arquive.get();

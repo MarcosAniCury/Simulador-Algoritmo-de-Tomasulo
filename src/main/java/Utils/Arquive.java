@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import Controller.RegisterController;
 import Model.Instruction;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class Arquive {
                 if (line.length != 2 || options.length != 3) { 
                     //Pattern INS OP1,OP2,OP3
                     throw new Exception("Arquive is not in pattern"); 
+                }
+                if (!RegisterController.existRegisterName(options[0])) {
+                    throw new Exception("Register not exist");
                 }
                 instructions.add(new Instruction(line[0], options[0], options[1], options[2]));
             }
