@@ -23,4 +23,8 @@ public class InstructionQueue {
     public Instruction remove() {
         return this.instructions.remove(0);
     }
+
+    public Instruction[] getAllInstructions() {
+        return (Instruction[]) this.instructions.toArray();
+    }
 }

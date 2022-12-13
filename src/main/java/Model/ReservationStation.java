@@ -26,4 +26,8 @@ public class ReservationStation {
     public void remove() {
         //return reservationStation.remove(0).getInstruction();
     }
+
+    public ReservationStationInstruction[] reservationStationInstructions() {
+        return (ReservationStationInstruction[]) this.reservationStation.toArray();
+    }
 }
