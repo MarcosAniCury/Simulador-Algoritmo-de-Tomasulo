@@ -37,4 +37,16 @@ public class Instruction {
     public String getInstruction() {
         return this.instruction;
     }
+
+    public String getOption1() {
+        return this.option1;
+    }
+
+    public String getOption2() {
+        return this.option2;
+    }
+
+    public String getOption3() {
+        return this.option3;
+    }
 }

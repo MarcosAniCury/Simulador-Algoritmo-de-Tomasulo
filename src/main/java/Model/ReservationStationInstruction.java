@@ -16,4 +16,8 @@ public class ReservationStationInstruction {
         this.registerOne = registerOne;
         this.registerTwo = registerTwo;
     }
+
+    public Register getRegisterTarget() {
+        return this.registerTarget;
+    }
 }
