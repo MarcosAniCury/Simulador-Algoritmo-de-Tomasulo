@@ -35,17 +35,19 @@ public final class App {
 
         Browser browser = engine.newBrowser();
 
+        // create window
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
 
             JFrame frame = new JFrame("Tomasulo");
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             frame.add(view, BorderLayout.CENTER);
-            frame.setSize(1280, 720);
+            frame.setSize(1280, 840);
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
 
+        // execute js
         browser.set(InjectJsCallback.class, params -> {
 
             Frame frame = params.frame();
@@ -64,6 +66,7 @@ public final class App {
             event.frame().executeJavaScript(javaScript);
         });
 
+        // load HTML
         String html = load("index.html");
         String base64Html = Base64.getEncoder().encodeToString(html.getBytes(UTF_8));
         String dataUrl = "data:text/html;base64," + base64Html;
@@ -76,7 +79,7 @@ public final class App {
      */
     private static String load(String resourceFile) {
 
-        System.out.println(resourceFile);
+        System.out.println("ARQUIVO: " + resourceFile);
 
         URL url = App.class.getResource(resourceFile);
 
@@ -84,6 +87,7 @@ public final class App {
                 Charsets.UTF_8.toString())) {
 
             scanner.useDelimiter("\\A");
+
             return scanner.hasNext() ? scanner.next() : "";
 
         } catch (IOException e) {
