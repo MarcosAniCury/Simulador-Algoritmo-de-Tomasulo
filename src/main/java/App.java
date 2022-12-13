@@ -30,8 +30,7 @@ import javax.swing.WindowConstants;
 public final class App {
 
     public static void main(String[] args) {
-        TomasuloController tomasuloController = new TomasuloController();
-        tomasuloController.runTomasulo(null);
+        TomasuloController.startTomasulo("comands.txt");
 
         Engine engine = Engine.newInstance(
                 EngineOptions.newBuilder(HARDWARE_ACCELERATED)
