@@ -1,24 +1,42 @@
 package Controller;
 
+import Constants.Definitions;
 import Model.Instruction;
-import Model.InstructionQueue;
-import Model.ReorderBuffer;
-import Utils.Arquive;
+import Model.ReservationStation;
+import Model.ReservationStationInstruction;
 
 public class TomasuloController {
-    public void runTomasulo() {
+    public static void setupTomasulo(String path) {
         try {
-            Arquive arquive = new Arquive("comands.txt");
-            InstructionQueue instructionQueue = new InstructionQueue();
-            ReorderBuffer reorderBuffer = new ReorderBuffer();
+            //Create global variables for arquiteture
+            RegisterController.defineRegisters();
+            ArquiveController.readArquive(path);
+            InstructionQueueController.startInstructionQueue();
+            ReorderBufferController.startReorderBuffer();
+            ReservationStationController.startReservationStation();
 
-            for (int i = 0; i < 1; i++) {
-                Instruction instructionArquive = arquive.get();
-                int indexInstructionQueue = instructionQueue.add(instructionArquive);
-                reorderBuffer.add(instructionArquive, indexInstructionQueue);
+            //Full the instructionQueue and ReorderBuffer
+            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE; i++) {
+                Instruction instructionArquive = ArquiveController.getFirstIntruction();
+                int indexInstructionQueue = InstructionQueueController.instructionQueue.add(instructionArquive);
+                ReorderBufferController.reorderBuffer.add(instructionArquive, indexInstructionQueue);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
+    }
+    
+    public static void nextStep() {
+        try {
+            for (Instruction instruction : InstructionQueueController.instructionQueue.getAllInstructions()) {
+                for (ReservationStation reservationStation : ReservationStationController.allReservationsArea.values()) {
+                    for (ReservationStationInstruction reservationStationInstruction : reservationStation.reservationStationInstructions()) {
+                        //Dependencie check logic
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
 }

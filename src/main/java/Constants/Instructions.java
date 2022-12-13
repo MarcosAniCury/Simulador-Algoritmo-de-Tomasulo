@@ -34,4 +34,24 @@ public class Instructions {
     public static final String[] DETOUR = {BEQ, BNE, BLT, BGE};
     public static final String[] LOAD_STORE = {LB, LW, SB, SW};
     public static final String[] ALL_INSTRUCTIONS = {XOR, OR, AND, ADD, SUB, MUL, DIV, REM, BEQ, BNE, BLT, BGE, LB, LW, SB, SW};
+
+    //Enums
+    public static enum InstructionsEnum {
+        XOR,
+        OR,
+        AND,
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        REM,
+        BEQ,
+        BNE,
+        BLT,
+        BGE,
+        LB,
+        LW,
+        SB,
+        SW
+    }
 }

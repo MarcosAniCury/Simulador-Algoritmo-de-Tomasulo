@@ -17,6 +17,12 @@ public class Instruction {
         this.option3 = option3;    
     }
 
+    public Instruction(String instruction, String option1, String option2) throws Exception {
+        setInstruction(instruction);
+        this.option1 = option1;
+        this.option2 = option2;   
+    }
+
     public void setInstruction(String instruction) throws Exception{
         if (!Arrays.stream(Instructions.ALL_INSTRUCTIONS).anyMatch(item -> item.equals(instruction.toLowerCase().trim()))) {
             throw new Exception("Instruction not exist");
@@ -25,6 +31,10 @@ public class Instruction {
     }
 
     public void printInstruction() {
-        System.out.println(instruction+" "+option1+" "+option2+" "+option3);
+        System.out.println(instruction+" "+option1+" "+option2+" "+option3 != null ? option3 : "");
+    }
+
+    public String getInstruction() {
+        return this.instruction;
     }
 }
