@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Instruction;
 import Model.InstructionQueue;
 
 public class InstructionQueueController {
