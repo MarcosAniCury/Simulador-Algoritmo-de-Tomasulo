@@ -27,7 +27,7 @@ public class ReservationStation {
         //return reservationStation.remove(0).getInstruction();
     }
 
-    public ReservationStationInstruction[] reservationStationInstructions() {
+    public ReservationStationInstruction[] getReservationStationInstructions() {
         return (ReservationStationInstruction[]) this.reservationStation.toArray();
     }
 }

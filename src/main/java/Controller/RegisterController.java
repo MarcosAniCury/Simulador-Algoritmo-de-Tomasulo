@@ -23,4 +23,13 @@ public class RegisterController {
         }
         return false;
     }
+
+    public static Register findRegisterBasedInName(String name) throws Exception {
+        for (Register register : RegisterController.registers) {
+            if (register.getName().equals(name)) {
+                return register;
+            }
+        }
+        throw new Exception("Register asked not exist");
+    }
 }
