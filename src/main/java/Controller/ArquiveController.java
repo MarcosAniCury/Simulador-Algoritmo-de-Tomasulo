@@ -16,16 +16,27 @@ public class ArquiveController {
             File file = new File(path);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                String[] line = scanner.nextLine().trim().split(" ");
-                String[] options = line[1].split(",");
-                if (line.length != 2 || options.length != 3) { 
+                String[] arquiveLine = scanner.nextLine().trim().split(":");
+                String line = "";
+                String jumpTag = null;
+                //Verify jump instruction
+                if (arquiveLine.length == 1) {
+                    line = arquiveLine[0];
+                } else {
+                    jumpTag = arquiveLine[0].trim();
+                    line = arquiveLine[1];
+                }
+
+                String[] lines = line.trim().split(" ");
+                String[] options = lines[1].split(",");
+                if (lines.length != 2 || options.length != 3) { 
                     //Pattern INS OP1,OP2,OP3
                     throw new Exception("Arquive is not in pattern"); 
                 }
                 if (!RegisterController.existRegisterName(options[0])) {
                     throw new Exception("Register not exist");
                 }
-                ArquiveController.arquive.addInstruction(new Instruction(line[0], options[0], options[1], options[2]));
+                ArquiveController.arquive.addInstruction(new Instruction(lines[0], options[0], options[1], options[2], jumpTag));
             }
             scanner.close();
         } catch (IOException e) {

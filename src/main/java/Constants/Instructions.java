@@ -22,9 +22,7 @@ public class Instructions {
     public static final String BGE = "bge";
 
     //Load - Store
-    public static final String LB = "lb";
     public static final String LW = "lw";
-    public static final String SB = "sb";
     public static final String SW = "sw";
 
     //Arrays
@@ -32,7 +30,7 @@ public class Instructions {
     public static final String[] ARITIMETIC = {ADD, SUB};
     public static final String[] MULT = {MUL, DIV, REM};
     public static final String[] DETOUR = {BEQ, BNE, BLT, BGE};
-    public static final String[] LOAD_STORE = {LB, LW, SB, SW};
+    public static final String[] LOAD_STORE = {LW, SW};
     public static final String[] ALL_INSTRUCTIONS = {XOR, OR, AND, ADD, SUB, MUL, DIV, REM, BEQ, BNE, BLT, BGE, LB, LW, SB, SW};
 
     //Enums
@@ -49,9 +47,7 @@ public class Instructions {
         BNE,
         BLT,
         BGE,
-        LB,
         LW,
-        SB,
         SW
     }
 }

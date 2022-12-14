@@ -24,6 +24,10 @@ public class ReorderBuffer {
         return reorderBuffer.remove(0).getInstruction();
     }
 
+    public BufferInstruction remove(int index) {
+        return reorderBuffer.remove(index);
+    }
+
     public BufferInstruction[] getBufferInstructions() {
         return this.reorderBuffer.toArray(new BufferInstruction[0]);
     }
@@ -34,5 +38,20 @@ public class ReorderBuffer {
 
     public int size() {
         return this.reorderBuffer.size();
+    }
+
+    public int findIndexBasedInIntruction(Instruction instruction) throws Exception {
+        for (int i = 0; i < reorderBuffer.size(); i++) {
+            Instruction instructionFromBuffer = reorderBuffer.get(i).getInstruction();
+            if (
+                instruction.getInstruction().equals(instructionFromBuffer.getInstruction()) && 
+                instruction.getOption1().equals(instructionFromBuffer.getOption1()) && 
+                instruction.getOption2().equals(instructionFromBuffer.getOption2()) &&
+                instruction.getOption3().equals(instructionFromBuffer.getOption3())
+            ) {
+                return i;
+            }
+        }
+        throw new Exception("Instruction not found");
     }
 }
