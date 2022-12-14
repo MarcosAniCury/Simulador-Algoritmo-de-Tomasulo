@@ -25,7 +25,7 @@ public class InstructionQueue {
     }
 
     public QueueInstruction[] getAllQueueInstructions() {
-        return (QueueInstruction[]) this.instructions.toArray();
+        return this.instructions.toArray(new QueueInstruction[0]);
     }
 
     public int getInstructionQueueSize() {
