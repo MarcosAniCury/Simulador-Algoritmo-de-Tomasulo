@@ -46,6 +46,10 @@ public class Instruction {
         return this.option3;
     }
 
+    public String getInstructionFormated(){
+        return instruction + " " + option1 + ", " + option2 + ", " + option3;
+    }
+
     @Override
     public String toString() {
         return "Instruction [instruction=" + instruction + ", option1=" + option1 + ", option2=" + option2
