@@ -11,6 +11,7 @@ public class ReservationStationController {
     public static HashMap<TypeEnum, ReservationStation> allReservationsArea;
 
     public static void startReservationStation() {
+        ReservationStationController.allReservationsArea = new HashMap<TypeEnum, ReservationStation>();
         for (TypeEnum typeReservationStation : TypeEnum.values()) {
             ReservationStationController.allReservationsArea.put(typeReservationStation, new ReservationStation(typeReservationStation));
         }
