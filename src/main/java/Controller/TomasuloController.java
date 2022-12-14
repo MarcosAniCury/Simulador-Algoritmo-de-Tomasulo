@@ -105,6 +105,10 @@ public class TomasuloController {
         for (ReservationStation reservationStation : reservationStations) {
             ReservationStationInstruction[] reservationStationInstructions = reservationStation.getReservationStationInstructions();
             for (int i = 0;i < reservationStationInstructions.length; i++) {
+                if (reservationStationInstructions[i].getCicle() > 0) {
+                    reservationStationInstructions[i].removeCicle();
+                    continue;
+                }
                 String reservationStationInstructionRegisterOneName = reservationStationInstructions[i].getRegisterOne().getName();
                 String reservationStationInstructionRegisterTwoName = reservationStationInstructions[i].getRegisterTwo().getName();
                 BufferInstruction[] bufferInstructions = ReorderBufferController.reorderBuffer.getBufferInstructions();

@@ -3,6 +3,7 @@ package Controller;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import Constants.Definitions;
 import Constants.Instructions;
 import Constants.ReservationStation.TypeEnum;
 import Model.ReservationStation;
@@ -31,5 +32,20 @@ public class ReservationStationController {
         } else {
             throw new Exception("Instruction type nor found");
         }
+    }
+
+    public static int getCiclesBasedType(TypeEnum type) {
+        if (type == TypeEnum.TYPE_ARITMETIC) {
+            return Definitions.INSTRUCTION_CICLE_ARITIMETIC;
+        } else if (type == TypeEnum.TYPE_LOGIC) {
+            return Definitions.INSTRUCTION_CICLE_LOGIC;
+        } else if (type == TypeEnum.TYPE_MULT) {
+            return Definitions.INSTRUCTION_CICLE_MULT;
+        } else if (type == TypeEnum.TYPE_BEQ) {
+            return Definitions.INSTRUCTION_CICLE_BEQ;
+        } else if (type == TypeEnum.TYPE_MEMORY) {
+            return Definitions.INSTRUCTION_CICLE_LOAD_STORE;
+        }
+        return -1;
     }
 }
