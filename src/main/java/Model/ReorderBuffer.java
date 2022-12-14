@@ -23,4 +23,12 @@ public class ReorderBuffer {
     public Instruction remove() {
         return reorderBuffer.remove(0).getInstruction();
     }
+
+    public BufferInstruction[] getBufferInstructions() {
+        return (BufferInstruction[]) this.reorderBuffer.toArray();
+    }
+
+    public BufferInstruction getIndex(int index) {
+        return reorderBuffer.get(index);
+    }
 }

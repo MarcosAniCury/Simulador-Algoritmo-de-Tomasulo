@@ -6,13 +6,13 @@ import java.util.List;
 import Constants.Definitions;
 
 public class InstructionQueue {
-    private List<Instruction> instructions;
+    private List<QueueInstruction> instructions;
 
     public InstructionQueue() {
-        this.instructions = new ArrayList<Instruction>();
+        this.instructions = new ArrayList<QueueInstruction>();
     }
 
-    public int add(Instruction instruction) throws Exception {
+    public int add(QueueInstruction instruction) throws Exception {
         if (this.instructions.size() > Definitions.TAM_INSTRUCTION_QUEUE) {
             throw new Exception("Cannot insert new values in instruction queue. Max size: "+Definitions.TAM_INSTRUCTION_QUEUE);
         }
@@ -20,11 +20,15 @@ public class InstructionQueue {
         return this.instructions.size() - 1;
     }
 
-    public Instruction remove() {
+    public QueueInstruction remove() {
         return this.instructions.remove(0);
     }
 
-    public Instruction[] getAllInstructions() {
-        return (Instruction[]) this.instructions.toArray();
+    public QueueInstruction[] getAllQueueInstructions() {
+        return (QueueInstruction[]) this.instructions.toArray();
+    }
+
+    public int getInstructionQueueSize() {
+        return this.instructions.size();
     }
 }
