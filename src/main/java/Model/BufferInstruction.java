@@ -12,7 +12,7 @@ public class BufferInstruction {
 
     public BufferInstruction(Instruction instruction, int indexInstructionQueue) throws Exception {
         this.instruction = instruction;
-        this.state = StateEnum.STATE_ISSUE;
+        this.state = StateEnum.issue;
         this.value = "";
         this.indexInstructionQueue = indexInstructionQueue;
         this.registerDestination = RegisterController.findRegisterBasedInName(instruction.getOption1());

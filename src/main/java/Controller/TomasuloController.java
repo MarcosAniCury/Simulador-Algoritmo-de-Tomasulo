@@ -98,7 +98,7 @@ public class TomasuloController {
             RegisterController.findRegisterBasedInName(registerReadTwoName),
             instruction
         );
-        ReorderBufferController.reorderBuffer.getIndex(reorderBufferIndex).setState(StateEnum.STATE_EXECUTE);
+        ReorderBufferController.reorderBuffer.getIndex(reorderBufferIndex).setState(StateEnum.execute);
     }
 
     private static void dispatchFromReservationStationInstructions() throws Exception {
@@ -129,7 +129,7 @@ public class TomasuloController {
                     if (reservationStationInstructions[i].getRegisterOne() != null && reservationStationInstructions[i].getRegisterTwo() != null) {
                         reservationStationInstructions[i].getRegisterTarget().setValue(executeInstruction(reservationStationInstructions[i]));
                         ReservationStationController.allReservationsArea.get(reservationStation.getType()).remove(i);
-                        reservationStationInstructions[i].getRegisterTarget().getBufferInstruction().setState(StateEnum.STATE_WRITE_RESULT);
+                        reservationStationInstructions[i].getRegisterTarget().getBufferInstruction().setState(StateEnum.write_result);
                     }
                 }
             }
@@ -165,7 +165,7 @@ public class TomasuloController {
         int i = 0;
         while (i < ReorderBufferController.reorderBuffer.size()) {
             BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
-            if (reorderBufferInstruction.getState() != StateEnum.STATE_COMMIT) {
+            if (reorderBufferInstruction.getState() != StateEnum.commit) {
                 break;
             }
             ReorderBufferController.reorderBuffer.remove(i);
@@ -177,8 +177,8 @@ public class TomasuloController {
         int i = 0;
         do {
             BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
-            if (reorderBufferInstruction.getState() == StateEnum.STATE_WRITE_RESULT) {
-                reorderBufferInstruction.setState(StateEnum.STATE_COMMIT);
+            if (reorderBufferInstruction.getState() == StateEnum.write_result) {
+                reorderBufferInstruction.setState(StateEnum.commit);
             }
         } while (canCommit && i < ReorderBufferController.reorderBuffer.size());
     }
