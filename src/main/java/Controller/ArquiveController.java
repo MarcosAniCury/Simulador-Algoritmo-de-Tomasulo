@@ -37,4 +37,8 @@ public class ArquiveController {
     public static Instruction getFirstIntruction() throws Exception {
         return ArquiveController.arquive.get();
     }
+
+    public static int getArquiveSize() {
+        return ArquiveController.arquive.size();
+    }
 }
