@@ -9,7 +9,7 @@ public class InstructionController {
     public static InstructionsEnum findInstructionEnumBasedInInstructionName(String name) throws Exception {
         InstructionsEnum[] instructionsEnum = InstructionsEnum.values();
         for (InstructionsEnum instructionEnum : instructionsEnum) {
-            if (instructionEnum.toString().equals(name)) {
+            if (instructionEnum.toString().equals(name.toUpperCase())) {
                 return instructionEnum;
             }
         }

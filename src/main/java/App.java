@@ -56,7 +56,7 @@ public final class App {
                         } else {
                             addressFirstRegister = "Regs["+reservationStationInstructions[i].getRegisterOne().getName()+']';
                         }
-                    } else {
+                    } else if (reservationStationInstructions[i].getRegisterOne().getBufferInstruction() != null) {
                         valueFirstRegister = "#"+reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String addressSecondRegister = "";
@@ -68,7 +68,7 @@ public final class App {
                         } else {
                             addressSecondRegister = "Regs["+reservationStationInstructions[i].getRegisterTwo().getName()+']';
                         }
-                    } else {
+                    } else if (reservationStationInstructions[i].getRegisterTwo().getBufferInstruction() != null) {
                         valueSecondRegister = "#"+reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String registerDestination = "#"+reservationStationInstructions[i].getRegisterTarget().getName();
@@ -82,8 +82,7 @@ public final class App {
             System.out.println("Field \t F0 \t F1 \t F2 \t F3 \t F4 \t F5 \t F6 \t F7 \t F8 \t F9 \t F10");
             System.out.println("Reorder #");
             System.out.println("Busy");
-            System.out.println("------------------------------------------------------------------------------------------");
-            System.out.println("------------------------------------------------------------------------------------------");        
+            System.out.println("------------------------------------------------------------------------------------------");   
             System.out.println("\n");
 
             String next = scanner.nextLine();

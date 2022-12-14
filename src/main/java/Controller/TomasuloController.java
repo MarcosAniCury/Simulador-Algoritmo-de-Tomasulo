@@ -73,7 +73,7 @@ public class TomasuloController {
     }
 
     private static boolean verifyIfInstructionHasDependencie(String registerReadOneName, String registerReadTwoName) {
-        ReservationStation[] reservationStations = (ReservationStation[]) ReservationStationController.allReservationsArea.values().toArray();
+        ReservationStation[] reservationStations = ReservationStationController.allReservationsArea.values().toArray(new ReservationStation[0]);
         for (ReservationStation reservationStation : reservationStations) {
             ReservationStationInstruction[] reservationStationInstructions = reservationStation.getReservationStationInstructions();
             for (ReservationStationInstruction reservationStationInstruction : reservationStationInstructions) {
@@ -102,7 +102,7 @@ public class TomasuloController {
     }
 
     private static void dispatchFromReservationStationInstructions() throws Exception {
-        ReservationStation[] reservationStations = (ReservationStation[]) ReservationStationController.allReservationsArea.values().toArray();
+        ReservationStation[] reservationStations = ReservationStationController.allReservationsArea.values().toArray(new ReservationStation[0]);
         for (ReservationStation reservationStation : reservationStations) {
             ReservationStationInstruction[] reservationStationInstructions = reservationStation.getReservationStationInstructions();
             for (int i = 0;i < reservationStationInstructions.length; i++) {
