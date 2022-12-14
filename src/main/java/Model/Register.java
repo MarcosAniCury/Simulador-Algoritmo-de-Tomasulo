@@ -11,6 +11,12 @@ public class Register {
         this.bufferInstruction = null;
     }
 
+    public Register(String name, int value) {
+        this.name = name;
+        this.value = value;
+        this.bufferInstruction = null;
+    }
+
     public String getName(){
         return this.name;
     }

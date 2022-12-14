@@ -92,19 +92,19 @@ public class InstructionController {
 
     private static void discartInstructions(ReservationStationInstruction reservationStationInstruction) throws Exception {
         String jumpTag = reservationStationInstruction.getInstruction().getJumpTag();
-        int reorderBufferIndex = ReorderBufferController.reorderBuffer.findIndexBasedInIntruction(reservationStationInstruction.getInstruction());
+        int reorderBufferIndex = ReorderBufferController.reorderBuffer.findIndexBasedInInstruction(reservationStationInstruction.getInstruction());
         for (int i = reorderBufferIndex + 1; i < ReorderBufferController.reorderBuffer.size();i++) {
             Instruction reorderInstruction = ReorderBufferController.reorderBuffer.getIndex(i).getInstruction();
             if (reorderInstruction.getJumpTag().equals(jumpTag)) {
                 break;
             }
-            int instructionQueueIndexInstruction = InstructionQueueController.instructionQueue.findIndexBasedInIntruction(reorderInstruction);
+            int instructionQueueIndexInstruction = InstructionQueueController.instructionQueue.findIndexBasedInInstruction(reorderInstruction);
             if (instructionQueueIndexInstruction != -1) {
                 InstructionQueueController.instructionQueue.remove(instructionQueueIndexInstruction);
             }
             ReorderBufferController.reorderBuffer.remove(i);
             for (ReservationStation reservationStation : ReservationStationController.allReservationsArea.values()) {
-                int reservationStationIndexInstruction = reservationStation.findIndexBasedInIntruction(reorderInstruction);
+                int reservationStationIndexInstruction = reservationStation.findIndexBasedInInstruction(reorderInstruction);
                 if (reservationStationIndexInstruction != -1) {
                     reservationStation.remove(reservationStationIndexInstruction);
                 }
