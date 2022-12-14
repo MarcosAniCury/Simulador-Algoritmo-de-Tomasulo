@@ -115,10 +115,7 @@ public class TomasuloController {
                 String reservationStationInstructionRegisterOneName = reservationStationInstructions[i].getRegisterOne().getName();
                 String reservationStationInstructionRegisterTwoName = reservationStationInstructions[i].getRegisterTwo().getName();
                 BufferInstruction[] bufferInstructions = ReorderBufferController.reorderBuffer.getBufferInstructions();
-                int reservationStationInstructionPositionInReorderBuffer = reservationStationInstructions[i].
-                                                                            getRegisterTarget().
-                                                                            getBufferInstruction().
-                                                                            getIndexInstructionQueue();
+                int reservationStationInstructionPositionInReorderBuffer = reservationStation.findIndexBasedInInstruction(reservationStationInstructions[i].getInstruction());
                 for (int j = 0; j <= reservationStationInstructionPositionInReorderBuffer; j++) {
                     String bufferInstructionRegisterTargetName = bufferInstructions[j].getInstruction().getOption1();
                     if (bufferInstructionRegisterTargetName.equals(reservationStationInstructionRegisterOneName) ) {
@@ -130,8 +127,8 @@ public class TomasuloController {
 
                     if (reservationStationInstructions[i].getRegisterOne() != null && reservationStationInstructions[i].getRegisterTwo() != null) {
                         reservationStationInstructions[i].getRegisterTarget().setValue(executeInstruction(reservationStationInstructions[i]));
-                        ReservationStationController.allReservationsArea.get(reservationStation.getType()).remove(i);
                         reservationStationInstructions[i].getRegisterTarget().getBufferInstruction().setState(StateEnum.write_result);
+                        ReservationStationController.allReservationsArea.get(reservationStation.getType()).remove(reservationStation.findIndexBasedInInstruction(reservationStationInstructions[i].getInstruction()));
                     }
                 }
             }
@@ -177,7 +174,7 @@ public class TomasuloController {
     private static void tryCommitInstructions() {
         boolean canCommit = true;
         int i = 0;
-        while (canCommit && i <= ReorderBufferController.reorderBuffer.size() && ReorderBufferController.reorderBuffer.size() > 0) {
+        while (canCommit && i < ReorderBufferController.reorderBuffer.size() && ReorderBufferController.reorderBuffer.size() > 0) {
             BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i++);
             if (reorderBufferInstruction.getState() == StateEnum.write_result) {
                 reorderBufferInstruction.setState(StateEnum.commit);
