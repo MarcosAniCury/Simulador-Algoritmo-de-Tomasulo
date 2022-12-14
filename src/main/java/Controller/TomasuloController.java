@@ -175,13 +175,16 @@ public class TomasuloController {
     }
 
     private static void tryCommitInstructions() {
-        boolean canCommit = false;
+        boolean canCommit = true;
         int i = 0;
-        do {
-            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
+        while (canCommit && i <= ReorderBufferController.reorderBuffer.size() && ReorderBufferController.reorderBuffer.size() > 0) {
+            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i++);
             if (reorderBufferInstruction.getState() == StateEnum.write_result) {
                 reorderBufferInstruction.setState(StateEnum.commit);
+                canCommit = true;
+            } else {
+                canCommit = false;
             }
-        } while (canCommit && i < ReorderBufferController.reorderBuffer.size());
+        };
     }
 }
