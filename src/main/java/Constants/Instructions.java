@@ -31,7 +31,7 @@ public class Instructions {
     public static final String[] MULT = {MUL, DIV, REM};
     public static final String[] DETOUR = {BEQ, BNE, BLT, BGE};
     public static final String[] LOAD_STORE = {LW, SW};
-    public static final String[] ALL_INSTRUCTIONS = {XOR, OR, AND, ADD, SUB, MUL, DIV, REM, BEQ, BNE, BLT, BGE, LB, LW, SB, SW};
+    public static final String[] ALL_INSTRUCTIONS = {XOR, OR, AND, ADD, SUB, MUL, DIV, REM, BEQ, BNE, BLT, BGE, LW, SW};
 
     //Enums
     public static enum InstructionsEnum {
