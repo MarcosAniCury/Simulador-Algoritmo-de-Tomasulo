@@ -31,4 +31,8 @@ public class ReorderBuffer {
     public BufferInstruction getIndex(int index) {
         return reorderBuffer.get(index);
     }
+
+    public int size() {
+        return this.reorderBuffer.size();
+    }
 }

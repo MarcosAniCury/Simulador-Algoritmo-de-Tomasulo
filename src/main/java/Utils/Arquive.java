@@ -23,4 +23,8 @@ public class Arquive {
     public Instruction[] getAllInstructions() {
         return instructions.toArray(new Instruction[0]);
     }
+
+    public int size() {
+        return instructions.size();
+    }
 }

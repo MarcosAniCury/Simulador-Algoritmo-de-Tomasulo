@@ -17,7 +17,6 @@ public class BufferInstruction {
         this.value = "";
         this.indexInstructionQueue = indexInstructionQueue;
         this.registerDestination = RegisterController.findRegisterBasedInName(instruction.getOption1());
-        this.registerDestination.setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(indexInstructionQueue));
     }
 
     public Instruction getInstruction() {

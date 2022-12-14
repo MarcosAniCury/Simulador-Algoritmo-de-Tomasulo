@@ -25,11 +25,15 @@ public class TomasuloController {
             ReservationStationController.startReservationStation();
 
             //Full the instructionQueue and ReorderBuffer
-            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE; i++) {
+            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ArquiveController.getArquiveSize(); i++) {
                 Instruction instructionArquive = ArquiveController.getFirstIntruction();
                 int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
                 InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));
                 ReorderBufferController.reorderBuffer.add(instructionArquive, indexQueueInstruction);
+            }
+            //Set register reorder buffer destination
+            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ReorderBufferController.reorderBuffer.size(); i++) {
+                ReorderBufferController.reorderBuffer.getIndex(i).getRegisterDestination().setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(i));
             }
         } catch (Exception e) {
             e.printStackTrace();
