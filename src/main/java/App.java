@@ -4,6 +4,7 @@ import java.util.Scanner;
 import Controller.ReorderBufferController;
 import Controller.TomasuloController;
 import Model.BufferInstruction;
+import Constants.Definitions;
 import Constants.Instructions;
 import Model.ReservationStation;
 import Model.ReservationStationInstruction;
@@ -21,21 +22,32 @@ public final class App {
             System.out.println("------------------------------------------------------------------------------------------");        
             System.out.println("\t\t\t\t Reorder Buffer");
             System.out.println("------------------------------------------------------------------------------------------");        
-            System.out.println("Entry \t Busy \t Instruction \t State \t\t Destination \t Value");
+            System.out.println("Entry \t Busy \t Instruction \t   State \t Destination \t Value");
             System.out.println("------------------------------------------------------------------------------------------");        
             
             BufferInstruction [] inst = ReorderBufferController.reorderBuffer.getBufferInstructions();        
             
             for (int i = 0 ; i < inst.length ; i++) {
+                
                 System.out.print(i+1);
-                System.out.print("\t busy");
+                System.out.print("\t yes");
                 System.out.print("\t" + inst[i].getInstruction().getInstructionFormated());
-                System.out.print("\t" + inst[i].getState());
-                System.out.print("\t" + inst[i].getRegisterDestination().getName());
-                System.out.print("\t" + inst[i].getValue());
+                System.out.print("\t    " + inst[i].getState());
+                System.out.print("\t  " + inst[i].getRegisterDestination().getName());
+                System.out.print("\t" + inst[i].getValue());                
+                System.out.print("\n");
             }
 
-            System.out.println("\n");
+            for (int i = inst.length ; i < Definitions.TAM_BUFFER_INSTRUCTION ; i++) {
+                System.out.print(i+1);
+                System.out.print("\t no");
+                System.out.print("\t");
+                System.out.print("\t");
+                System.out.print("\t");
+                System.out.print("\t");                
+                System.out.print("\n");
+            }
+            
             System.out.println("------------------------------------------------------------------------------------------");        
             System.out.println("\t\t\t\t ReservationStations");
             System.out.println("------------------------------------------------------------------------------------------");
