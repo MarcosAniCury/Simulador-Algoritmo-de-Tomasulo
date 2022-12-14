@@ -168,7 +168,8 @@ public class TomasuloController {
             if (reorderBufferInstruction.getState() != StateEnum.commit) {
                 break;
             }
-            ReorderBufferController.reorderBuffer.remove(i);
+            BufferInstruction instructionRemove = ReorderBufferController.reorderBuffer.remove(i);
+            instructionRemove.getRegisterDestination().setBufferInstruction(null);
         }
     }
 
