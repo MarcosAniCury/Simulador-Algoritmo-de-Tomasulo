@@ -30,10 +30,6 @@ public class Instruction {
         this.instruction = instruction.toLowerCase().trim();
     }
 
-    public void printInstruction() {
-        System.out.println(instruction+" "+option1+" "+option2+" "+option3 != null ? option3 : "");
-    }
-
     public String getInstruction() {
         return this.instruction;
     }
@@ -48,5 +44,11 @@ public class Instruction {
 
     public String getOption3() {
         return this.option3;
+    }
+
+    @Override
+    public String toString() {
+        return "Instruction [instruction=" + instruction + ", option1=" + option1 + ", option2=" + option2
+                + ", option3=" + option3 + "]";
     }
 }
