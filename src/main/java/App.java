@@ -84,9 +84,8 @@ public final class App {
                             addressFirstRegister = "Regs["
                                     + reservationStationInstructions[i].getRegisterOne().getName() + ']';
                         }
-                    } else {
-                        valueFirstRegister = "#" + reservationStationInstructions[i].getRegisterOne()
-                                .getBufferInstruction().getRegisterDestination().getName();
+                    } else if (reservationStationInstructions[i].getRegisterOne().getBufferInstruction() != null) {
+                        valueFirstRegister = "#"+reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String addressSecondRegister = "";
                     String valueSecondRegister = "";
@@ -101,9 +100,8 @@ public final class App {
                             addressSecondRegister = "Regs["
                                     + reservationStationInstructions[i].getRegisterTwo().getName() + ']';
                         }
-                    } else {
-                        valueSecondRegister = "#" + reservationStationInstructions[i].getRegisterTwo()
-                                .getBufferInstruction().getRegisterDestination().getName();
+                    } else if (reservationStationInstructions[i].getRegisterTwo().getBufferInstruction() != null) {
+                        valueSecondRegister = "#"+reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String registerDestination = "#" + reservationStationInstructions[i].getRegisterTarget().getName();
                     System.out.println(name + "\tYes\t" + instructionType + "\t" + addressFirstRegister + "\t"
@@ -137,10 +135,7 @@ public final class App {
             }
 
             System.out.println("Busy");
-            System.out.println(
-                    "------------------------------------------------------------------------------------------");
-            System.out.println(
-                    "------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------");   
             System.out.println("\n");
 
             String next = scanner.nextLine();
