@@ -5,7 +5,7 @@ import Constants.Definitions;
 import Model.Register;
 
 public class RegisterController {
-    private static Register[] registers;
+    public static Register[] registers;
 
     public static void defineRegisters() {
         Random rand = new Random();
@@ -34,4 +34,5 @@ public class RegisterController {
         }
         throw new Exception("Register asked not exist");
     }
+
 }
