@@ -23,7 +23,7 @@ public class BufferInstruction {
     }
 
     public int getIndexInstructionQueue() {
-        return this.getIndexInstructionQueue();
+        return this.indexInstructionQueue;
     }
 
     public StateEnum getState() {
@@ -36,5 +36,9 @@ public class BufferInstruction {
 
     public Register getRegisterDestination() {
         return this.registerDestination;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

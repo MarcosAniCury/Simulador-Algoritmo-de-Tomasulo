@@ -31,9 +31,11 @@ public class ArquiveController {
                 String[] options = lines[1].split(",");
                 if (lines.length != 2 || options.length != 3) { 
                     //Pattern INS OP1,OP2,OP3
+                    scanner.close();
                     throw new Exception("Arquive is not in pattern"); 
                 }
                 if (!RegisterController.existRegisterName(options[0])) {
+                    scanner.close();
                     throw new Exception("Register not exist");
                 }
                 ArquiveController.arquive.addInstruction(new Instruction(lines[0], options[0], options[1], options[2], jumpTag));
