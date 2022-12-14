@@ -116,13 +116,15 @@ public final class App {
             Register [] r = RegisterController.registers;        
 
             for (int i = 0; i < 10; i++) {
-                if(r[i].bufferInstruction == null) System.out.print("");
-                else
+                if(r[i].bufferInstruction == null) {
+                    System.out.print("");
+                } else {
                     try {
                         System.out.print(" #" + ReorderBufferController.reorderBuffer.findIndexBasedInInstruction(r[i].bufferInstruction.getInstruction()));
-                    } catch (Exception e) {                        
-                        e.printStackTrace();
-                    }                
+                    } catch (Exception e) { 
+                        System.out.print("");                       
+                    }      
+                }          
                 System.out.print("\t");
             }
 

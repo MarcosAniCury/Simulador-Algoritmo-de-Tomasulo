@@ -33,10 +33,10 @@ public class TomasuloController {
     public static void nextStep() {
         try {
             addNewInstructionInQueue();
-            addInstructionsAndReservationStation();
             removeOlderInstructionsCommited();
             tryCommitInstructions();
             dispatchFromReservationStationInstructions();
+            addInstructionsAndReservationStation();
         } catch (Exception e) {
             e.printStackTrace();
         } 
