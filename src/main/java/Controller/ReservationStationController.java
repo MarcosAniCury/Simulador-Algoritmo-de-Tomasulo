@@ -20,30 +20,30 @@ public class ReservationStationController {
     
     public static TypeEnum findTypeEnumBaseInstruction(String instruction) throws Exception {
         if (Arrays.stream(Instructions.LOGIC).anyMatch(item -> item.equals(instruction))) {
-            return TypeEnum.TYPE_LOGIC;
+            return TypeEnum.logic;
         } else if (Arrays.stream(Instructions.MULT).anyMatch(item -> item.equals(instruction))) {
-            return TypeEnum.TYPE_MULT;
+            return TypeEnum.mult;
         } else if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(instruction))) {
-            return TypeEnum.TYPE_MEMORY;
+            return TypeEnum.memory;
         } else if (Arrays.stream(Instructions.DETOUR).anyMatch(item -> item.equals(instruction))) {
-            return TypeEnum.TYPE_BEQ;
+            return TypeEnum.beq;
         } else if (Arrays.stream(Instructions.ARITIMETIC).anyMatch(item -> item.equals(instruction))) {
-            return TypeEnum.TYPE_ARITMETIC;
+            return TypeEnum.aritmetic;
         } else {
             throw new Exception("Instruction type nor found");
         }
     }
 
     public static int getCiclesBasedType(TypeEnum type) {
-        if (type == TypeEnum.TYPE_ARITMETIC) {
+        if (type == TypeEnum.aritmetic) {
             return Definitions.INSTRUCTION_CICLE_ARITIMETIC;
-        } else if (type == TypeEnum.TYPE_LOGIC) {
+        } else if (type == TypeEnum.logic) {
             return Definitions.INSTRUCTION_CICLE_LOGIC;
-        } else if (type == TypeEnum.TYPE_MULT) {
+        } else if (type == TypeEnum.mult) {
             return Definitions.INSTRUCTION_CICLE_MULT;
-        } else if (type == TypeEnum.TYPE_BEQ) {
+        } else if (type == TypeEnum.beq) {
             return Definitions.INSTRUCTION_CICLE_BEQ;
-        } else if (type == TypeEnum.TYPE_MEMORY) {
+        } else if (type == TypeEnum.memory) {
             return Definitions.INSTRUCTION_CICLE_LOAD_STORE;
         }
         return -1;

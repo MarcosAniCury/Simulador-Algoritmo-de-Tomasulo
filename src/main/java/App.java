@@ -51,7 +51,7 @@ public final class App {
             System.out.println("------------------------------------------------------------------------------------------");        
             System.out.println("\t\t\t\t ReservationStations");
             System.out.println("------------------------------------------------------------------------------------------");
-            System.out.println("Name \t Busy \t Op \t Vj \t\t Vk \t\t Qj \t Qk \t Dest");
+            System.out.println("Name \t\t Busy \t Op \t Vj \t\t Vk \t Qj \t Qk \t Dest");
             System.out.println("------------------------------------------------------------------------------------------");
 
             for (ReservationStation reservationStation : ReservationStationController.allReservationsArea.values()) {
@@ -61,27 +61,31 @@ public final class App {
                     String instructionType = reservationStationInstructions[i].getInstructionType().toString();
                     String addressFirstRegister = "";
                     String valueFirstRegister = "";
-                    if (reservationStationInstructions[i].getRegisterOne().getValue() != -1) {
-                        String firstRegisterInstructionName = reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getInstruction().getInstruction();
-                        if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(firstRegisterInstructionName))) {
-                            addressFirstRegister = "Mem[Regs["+reservationStationInstructions[i].getRegisterOne().getName()+"]]";
+                    if (reservationStationInstructions[i].getRegisterOne().getBufferInstruction() != null) {
+                        if (reservationStationInstructions[i].getRegisterOne().getValue() != -1) {
+                            String firstRegisterInstructionName = reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getInstruction().getInstruction();
+                            if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(firstRegisterInstructionName))) {
+                                addressFirstRegister = "Mem[Regs["+reservationStationInstructions[i].getRegisterOne().getName()+"]]";
+                            } else {
+                                addressFirstRegister = "Regs["+reservationStationInstructions[i].getRegisterOne().getName()+']';
+                            }
                         } else {
-                            addressFirstRegister = "Regs["+reservationStationInstructions[i].getRegisterOne().getName()+']';
+                            valueFirstRegister = "#"+reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getRegisterDestination().getName();
                         }
-                    } else if (reservationStationInstructions[i].getRegisterOne().getBufferInstruction() != null) {
-                        valueFirstRegister = "#"+reservationStationInstructions[i].getRegisterOne().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String addressSecondRegister = "";
                     String valueSecondRegister = "";
-                    if (reservationStationInstructions[i].getRegisterTwo().getValue() != -1) {
-                        String secondRegisterInstructionName = reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getInstruction().getInstruction();
-                        if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(secondRegisterInstructionName))) {
-                            addressSecondRegister = "Mem[Regs["+reservationStationInstructions[i].getRegisterTwo().getName()+"]]";
+                    if (reservationStationInstructions[i].getRegisterTwo().getBufferInstruction() != null) {
+                        if (reservationStationInstructions[i].getRegisterTwo().getValue() != -1) {
+                            String secondRegisterInstructionName = reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getInstruction().getInstruction();
+                            if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(secondRegisterInstructionName))) {
+                                addressSecondRegister = "Mem[Regs["+reservationStationInstructions[i].getRegisterTwo().getName()+"]]";
+                            } else {
+                                addressSecondRegister = "Regs["+reservationStationInstructions[i].getRegisterTwo().getName()+']';
+                            }
                         } else {
-                            addressSecondRegister = "Regs["+reservationStationInstructions[i].getRegisterTwo().getName()+']';
+                            valueSecondRegister = "#"+reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getRegisterDestination().getName();
                         }
-                    } else if (reservationStationInstructions[i].getRegisterTwo().getBufferInstruction() != null) {
-                        valueSecondRegister = "#"+reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getRegisterDestination().getName();
                     }
                     String registerDestination = "#"+reservationStationInstructions[i].getRegisterTarget().getName();
                     System.out.println(name+"\tYes\t"+instructionType+"\t"+addressFirstRegister+"\t"+addressSecondRegister+"\t"+valueFirstRegister+"\t"+valueSecondRegister+"\t"+registerDestination+"\t");

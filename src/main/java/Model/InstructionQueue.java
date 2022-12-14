@@ -36,7 +36,7 @@ public class InstructionQueue {
         return this.instructions.size();
     }
 
-    public int findIndexBasedInIntruction(Instruction instruction) {
+    public int findIndexBasedInInstruction(Instruction instruction) {
         for (int i = 0; i < instructions.size(); i++) {
             Instruction instructionFromQueue = instructions.get(i).getInstruction();
             if (

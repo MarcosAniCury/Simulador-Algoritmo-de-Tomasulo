@@ -40,7 +40,7 @@ public class ReorderBuffer {
         return this.reorderBuffer.size();
     }
 
-    public int findIndexBasedInIntruction(Instruction instruction) throws Exception {
+    public int findIndexBasedInInstruction(Instruction instruction) throws Exception {
         for (int i = 0; i < reorderBuffer.size(); i++) {
             Instruction instructionFromBuffer = reorderBuffer.get(i).getInstruction();
             if (

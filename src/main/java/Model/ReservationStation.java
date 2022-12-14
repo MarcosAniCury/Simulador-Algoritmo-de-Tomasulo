@@ -39,7 +39,7 @@ public class ReservationStation {
         return reservationStation.remove(i);
     }
 
-    public int findIndexBasedInIntruction(Instruction instruction) throws Exception {
+    public int findIndexBasedInInstruction(Instruction instruction) throws Exception {
         for (int i = 0; i < reservationStation.size(); i++) {
             Instruction instructionFromReservation = reservationStation.get(i).getInstruction();
             if (

@@ -9,6 +9,7 @@ import Constants.Instructions.InstructionsEnum;
 import Constants.ReservationStation.TypeEnum;
 import Model.BufferInstruction;
 import Model.Instruction;
+import Model.InstructionQueue;
 import Model.QueueInstruction;
 import Model.Register;
 import Model.ReservationStation;
@@ -99,6 +100,7 @@ public class TomasuloController {
             instruction
         );
         ReorderBufferController.reorderBuffer.getIndex(reorderBufferIndex).setState(StateEnum.execute);
+        InstructionQueueController.instructionQueue.remove(InstructionQueueController.instructionQueue.findIndexBasedInInstruction(instruction));
     }
 
     private static void dispatchFromReservationStationInstructions() throws Exception {
@@ -117,7 +119,7 @@ public class TomasuloController {
                                                                             getRegisterTarget().
                                                                             getBufferInstruction().
                                                                             getIndexInstructionQueue();
-                for (int j = 0; j < reservationStationInstructionPositionInReorderBuffer; j++) {
+                for (int j = 0; j <= reservationStationInstructionPositionInReorderBuffer; j++) {
                     String bufferInstructionRegisterTargetName = bufferInstructions[j].getInstruction().getOption1();
                     if (bufferInstructionRegisterTargetName.equals(reservationStationInstructionRegisterOneName) ) {
                         makeFowarding(bufferInstructions[j], reservationStationInstructions[i], reservationStationInstructions[i].getRegisterOne());

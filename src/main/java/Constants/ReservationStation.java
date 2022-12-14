@@ -13,10 +13,10 @@ public class ReservationStation {
 
     //Enums
     public static enum TypeEnum {
-        TYPE_LOGIC,
-        TYPE_MEMORY,
-        TYPE_MULT,
-        TYPE_ARITMETIC,
-        TYPE_BEQ
+        logic,
+        memory,
+        mult,
+        aritmetic,
+        beq
     }
 }
