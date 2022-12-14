@@ -25,7 +25,7 @@ public final class App {
             System.out.println("------------------------------------------------------------------------------------------");
             System.out.println("\t\t\t\t ReservationStations");
             System.out.println("------------------------------------------------------------------------------------------");
-            System.out.println("Name \t Busy \t Op \t Vj \t\t Vk \t\t Qj \t Qk \t Dest \t A");
+            System.out.println("Name \t Busy \t Op \t Vj \t\t Vk \t\t Qj \t Qk \t Dest");
             System.out.println("------------------------------------------------------------------------------------------");
 
             for (ReservationStation reservationStation : ReservationStationController.allReservationsArea.values()) {
@@ -57,7 +57,8 @@ public final class App {
                     } else {
                         valueSecondRegister = "#"+reservationStationInstructions[i].getRegisterTwo().getBufferInstruction().getRegisterDestination().getName();
                     }
-                    System.out.println(name+"\tYes\t"+instructionType+"\t"+addressFirstRegister+"\t"+addressSecondRegister+"\t"+valueFirstRegister+"\t"+valueSecondRegister+"\t");
+                    String registerDestination = "#"+reservationStationInstructions[i].getRegisterTarget().getName();
+                    System.out.println(name+"\tYes\t"+instructionType+"\t"+addressFirstRegister+"\t"+addressSecondRegister+"\t"+valueFirstRegister+"\t"+valueSecondRegister+"\t"+registerDestination+"\t");
                 }
             }
 
