@@ -4,7 +4,7 @@ import Constants.Definitions;
 import Model.Register;
 
 public class RegisterController {
-    private static Register[] registers;
+    public static Register[] registers;
 
     public static void defineRegisters() {
         RegisterController.registers = new Register[Definitions.N_REGISTER];
@@ -32,4 +32,5 @@ public class RegisterController {
         }
         throw new Exception("Register asked not exist");
     }
+
 }

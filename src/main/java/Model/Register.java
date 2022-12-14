@@ -3,7 +3,7 @@ package Model;
 public class Register {
     private String name;
     private int value;
-    private BufferInstruction bufferInstruction;
+    public BufferInstruction bufferInstruction;
 
     public Register(String name) {
         this.name = name;
