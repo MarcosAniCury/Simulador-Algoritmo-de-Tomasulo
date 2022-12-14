@@ -35,6 +35,8 @@ public class TomasuloController {
             addNewInstructionInQueue();
             addInstructionsAndReservationStation();
             dispatchFromReservationStationInstructions();
+            removeOlderInstructionsCommited();
+            tryCommitInstructions();
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -152,5 +154,27 @@ public class TomasuloController {
             return InstructionController.LoadStoreInstructionExecute(reservationStationInstruction);
         }
         return -1;
+    }
+
+    private static void removeOlderInstructionsCommited() {
+        int i = 0;
+        while (i < ReorderBufferController.reorderBuffer.size()) {
+            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
+            if (reorderBufferInstruction.getState() != StateEnum.STATE_COMMIT) {
+                break;
+            }
+            ReorderBufferController.reorderBuffer.remove(i);
+        }
+    }
+
+    private static void tryCommitInstructions() {
+        boolean canCommit = false;
+        int i = 0;
+        do {
+            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
+            if (reorderBufferInstruction.getState() == StateEnum.STATE_WRITE_RESULT) {
+                reorderBufferInstruction.setState(StateEnum.STATE_COMMIT);
+            }
+        } while (canCommit && i < ReorderBufferController.reorderBuffer.size());
     }
 }
