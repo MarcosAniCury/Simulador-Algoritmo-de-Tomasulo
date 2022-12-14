@@ -24,17 +24,7 @@ public class TomasuloController {
             ReorderBufferController.startReorderBuffer();
             ReservationStationController.startReservationStation();
 
-            //Full the instructionQueue and ReorderBuffer
-            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ArquiveController.getArquiveSize(); i++) {
-                Instruction instructionArquive = ArquiveController.getFirstIntruction();
-                int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
-                InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));
-                ReorderBufferController.reorderBuffer.add(instructionArquive, indexQueueInstruction);
-            }
-            //Set register reorder buffer destination
-            for (int i = 0; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ReorderBufferController.reorderBuffer.size(); i++) {
-                ReorderBufferController.reorderBuffer.getIndex(i).getRegisterDestination().setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(i));
-            }
+            addNewInstructionInQueue();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,11 +32,31 @@ public class TomasuloController {
     
     public static void nextStep() {
         try {
+            addNewInstructionInQueue();
             addInstructionsAndReservationStation();
             dispatchFromReservationStationInstructions();
+            removeOlderInstructionsCommited();
+            tryCommitInstructions();
         } catch (Exception e) {
             e.printStackTrace();
         } 
+    }
+
+    private static void addNewInstructionInQueue() throws Exception {
+        if (InstructionQueueController.instructionQueue.getInstructionQueueSize() < Definitions.TAM_INSTRUCTION_QUEUE) {
+            //Full the instructionQueue and ReorderBuffer
+            int instructionQueueSize = InstructionQueueController.instructionQueue.getInstructionQueueSize();
+            for (int i = instructionQueueSize; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ArquiveController.getArquiveSize(); i++) {
+                Instruction instructionArquive = ArquiveController.getFirstIntruction();
+                int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
+                InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));
+                ReorderBufferController.reorderBuffer.add(instructionArquive, indexQueueInstruction);
+            }
+            //Set register reorder buffer destination
+            for (int i = instructionQueueSize; i < Definitions.TAM_BUFFER_INSTRUCTION && i < ReorderBufferController.reorderBuffer.size(); i++) {
+                ReorderBufferController.reorderBuffer.getIndex(i).getRegisterDestination().setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(i));
+            }
+        }
     }
 
     private static void addInstructionsAndReservationStation() throws Exception {
@@ -84,16 +94,21 @@ public class TomasuloController {
             instructionType, 
             RegisterController.findRegisterBasedInName(registerWriteName), 
             RegisterController.findRegisterBasedInName(registerReadOneName), 
-            RegisterController.findRegisterBasedInName(registerReadTwoName)
+            RegisterController.findRegisterBasedInName(registerReadTwoName),
+            instruction
         );
         ReorderBufferController.reorderBuffer.getIndex(reorderBufferIndex).setState(StateEnum.STATE_EXECUTE);
     }
 
-    private static void dispatchFromReservationStationInstructions() {
+    private static void dispatchFromReservationStationInstructions() throws Exception {
         ReservationStation[] reservationStations = (ReservationStation[]) ReservationStationController.allReservationsArea.values().toArray();
         for (ReservationStation reservationStation : reservationStations) {
             ReservationStationInstruction[] reservationStationInstructions = reservationStation.getReservationStationInstructions();
             for (int i = 0;i < reservationStationInstructions.length; i++) {
+                if (reservationStationInstructions[i].getCicle() > 0) {
+                    reservationStationInstructions[i].removeCicle();
+                    continue;
+                }
                 String reservationStationInstructionRegisterOneName = reservationStationInstructions[i].getRegisterOne().getName();
                 String reservationStationInstructionRegisterTwoName = reservationStationInstructions[i].getRegisterTwo().getName();
                 BufferInstruction[] bufferInstructions = ReorderBufferController.reorderBuffer.getBufferInstructions();
@@ -129,7 +144,7 @@ public class TomasuloController {
         return false;
     }
 
-    private static int executeInstruction(ReservationStationInstruction reservationStationInstruction) {
+    private static int executeInstruction(ReservationStationInstruction reservationStationInstruction) throws Exception {
         InstructionsEnum instructionType = reservationStationInstruction.getInstructionType();
         if (Arrays.stream(Instructions.LOGIC).anyMatch(item -> item.equals(instructionType.toString()))) {
             return InstructionController.LogicInstructionExecute(reservationStationInstruction);
@@ -137,7 +152,33 @@ public class TomasuloController {
             return InstructionController.AritimeticInstructionExecute(reservationStationInstruction);
         } else if (Arrays.stream(Instructions.MULT).anyMatch(item -> item.equals(instructionType.toString()))) {
             return InstructionController.MultInstructionExecute(reservationStationInstruction);
+        } else if (Arrays.stream(Instructions.DETOUR).anyMatch(item -> item.equals(instructionType.toString()))) {
+            return InstructionController.BeqInstructionExecute(reservationStationInstruction);
+        } else if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(instructionType.toString()))) {
+            return InstructionController.LoadStoreInstructionExecute(reservationStationInstruction);
         }
         return -1;
+    }
+
+    private static void removeOlderInstructionsCommited() {
+        int i = 0;
+        while (i < ReorderBufferController.reorderBuffer.size()) {
+            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
+            if (reorderBufferInstruction.getState() != StateEnum.STATE_COMMIT) {
+                break;
+            }
+            ReorderBufferController.reorderBuffer.remove(i);
+        }
+    }
+
+    private static void tryCommitInstructions() {
+        boolean canCommit = false;
+        int i = 0;
+        do {
+            BufferInstruction reorderBufferInstruction = ReorderBufferController.reorderBuffer.getIndex(i);
+            if (reorderBufferInstruction.getState() == StateEnum.STATE_WRITE_RESULT) {
+                reorderBufferInstruction.setState(StateEnum.STATE_COMMIT);
+            }
+        } while (canCommit && i < ReorderBufferController.reorderBuffer.size());
     }
 }

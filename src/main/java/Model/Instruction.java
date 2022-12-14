@@ -9,18 +9,21 @@ public class Instruction {
     private String option1;
     private String option2;
     private String option3;
+    private String jumpTag;
 
     public Instruction(String instruction, String option1, String option2, String option3) throws Exception {
         setInstruction(instruction);
         this.option1 = option1;
         this.option2 = option2;
-        this.option3 = option3;    
+        this.option3 = option3;   
     }
 
-    public Instruction(String instruction, String option1, String option2) throws Exception {
+    public Instruction(String instruction, String option1, String option2, String option3, String jumpTag) throws Exception {
         setInstruction(instruction);
         this.option1 = option1;
-        this.option2 = option2;   
+        this.option2 = option2;
+        this.option3 = option3;   
+        this.jumpTag = jumpTag; 
     }
 
     public void setInstruction(String instruction) throws Exception{
@@ -54,5 +57,9 @@ public class Instruction {
     public String toString() {
         return "Instruction [instruction=" + instruction + ", option1=" + option1 + ", option2=" + option2
                 + ", option3=" + option3 + "]";
+    }
+    
+    public String getJumpTag() {
+        return this.jumpTag;
     }
 }

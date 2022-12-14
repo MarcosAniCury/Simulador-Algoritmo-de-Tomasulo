@@ -2,7 +2,6 @@ package Model;
 
 import Constants.BufferInstruction.StateEnum;
 import Controller.RegisterController;
-import Controller.ReorderBufferController;
 
 public class BufferInstruction {
     private Instruction instruction;

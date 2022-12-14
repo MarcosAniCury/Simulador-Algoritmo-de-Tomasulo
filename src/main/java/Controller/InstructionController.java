@@ -1,6 +1,8 @@
 package Controller;
 
 import Constants.Instructions.InstructionsEnum;
+import Model.Instruction;
+import Model.ReservationStation;
 import Model.ReservationStationInstruction;
 
 public class InstructionController {
@@ -18,7 +20,7 @@ public class InstructionController {
         boolean registerOne = reservationStationInstruction.getRegisterOne().getValue() > 0;
         boolean registerTwo = reservationStationInstruction.getRegisterTwo().getValue() > 0;
         boolean result = false;
-        if(reservationStationInstruction.getInstructionType() == InstructionsEnum.XOR) {
+        if (reservationStationInstruction.getInstructionType() == InstructionsEnum.XOR) {
             result = registerOne ^ registerTwo;
         } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.OR) {
             result = registerOne || registerTwo;
@@ -32,7 +34,7 @@ public class InstructionController {
         int registerOne = reservationStationInstruction.getRegisterOne().getValue();
         int registerTwo = reservationStationInstruction.getRegisterTwo().getValue();
         int result = -1;
-        if(reservationStationInstruction.getInstructionType() == InstructionsEnum.ADD) {
+        if (reservationStationInstruction.getInstructionType() == InstructionsEnum.ADD) {
             result = registerOne + registerTwo;
         } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.SUB) {
             result = registerOne - registerTwo;
@@ -44,12 +46,69 @@ public class InstructionController {
         int registerOne = reservationStationInstruction.getRegisterOne().getValue();
         int registerTwo = reservationStationInstruction.getRegisterTwo().getValue();
         int result = -1;
-        if(reservationStationInstruction.getInstructionType() == InstructionsEnum.MUL) {
+        if (reservationStationInstruction.getInstructionType() == InstructionsEnum.MUL) {
             result = registerOne * registerTwo;
         } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.DIV) {
             result = registerOne / registerTwo;
         } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.REM) {
+            result = registerOne % registerTwo;
         }
         return result;
+    }
+
+    public static int BeqInstructionExecute(ReservationStationInstruction reservationStationInstruction) throws Exception {
+        int registerOne = reservationStationInstruction.getRegisterOne().getValue();
+        int registerTwo = reservationStationInstruction.getRegisterTwo().getValue();
+        if (reservationStationInstruction.getInstructionType() == InstructionsEnum.BEQ) {
+            if (registerOne == registerTwo) {
+                discartInstructions(reservationStationInstruction);
+            }
+        } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.BNE) {
+            if (registerOne != registerTwo) {
+                discartInstructions(reservationStationInstruction);
+            }
+        } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.BGE) {
+            if (registerOne >= registerTwo) {
+                discartInstructions(reservationStationInstruction);
+            }
+        } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.BLT) {
+            if (registerOne < registerTwo) {
+                discartInstructions(reservationStationInstruction);
+            }
+        }
+        return reservationStationInstruction.getRegisterTarget().getValue();
+    }
+
+    public static int LoadStoreInstructionExecute(ReservationStationInstruction reservationStationInstruction) {
+        int registerOne = reservationStationInstruction.getRegisterOne().getValue();
+        int result = -1;
+        if (reservationStationInstruction.getInstructionType() == InstructionsEnum.LW) {
+            result = registerOne;
+        } else if (reservationStationInstruction.getInstructionType() == InstructionsEnum.SW) {
+            result = registerOne;
+        }
+        return result;
+    }
+
+    private static void discartInstructions(ReservationStationInstruction reservationStationInstruction) throws Exception {
+        String jumpTag = reservationStationInstruction.getInstruction().getJumpTag();
+        int reorderBufferIndex = ReorderBufferController.reorderBuffer.findIndexBasedInIntruction(reservationStationInstruction.getInstruction());
+        for (int i = reorderBufferIndex + 1; i < ReorderBufferController.reorderBuffer.size();i++) {
+            Instruction reorderInstruction = ReorderBufferController.reorderBuffer.getIndex(i).getInstruction();
+            if (reorderInstruction.getJumpTag().equals(jumpTag)) {
+                break;
+            }
+            int instructionQueueIndexInstruction = InstructionQueueController.instructionQueue.findIndexBasedInIntruction(reorderInstruction);
+            if (instructionQueueIndexInstruction != -1) {
+                InstructionQueueController.instructionQueue.remove(instructionQueueIndexInstruction);
+            }
+            ReorderBufferController.reorderBuffer.remove(i);
+            for (ReservationStation reservationStation : ReservationStationController.allReservationsArea.values()) {
+                int reservationStationIndexInstruction = reservationStation.findIndexBasedInIntruction(reorderInstruction);
+                if (reservationStationIndexInstruction != -1) {
+                    reservationStation.remove(reservationStationIndexInstruction);
+                }
+            }
+        }
     }
 }
