@@ -102,6 +102,9 @@ public final class App {
                             + addressSecondRegister + "\t" + valueFirstRegister + "\t" + valueSecondRegister + "\t"
                             + registerDestination + "\t");
                 }
+                for (int i = reservationStationInstructions.length; i < Definitions.TAM_RESERVATION_STATION;i++) {
+                    System.out.println(reservationStation.getType().toString()+i+"\t\tNo\t");
+                }
             }
 
             System.out.println(

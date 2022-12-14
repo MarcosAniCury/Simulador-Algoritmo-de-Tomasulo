@@ -32,11 +32,11 @@ public class TomasuloController {
     
     public static void nextStep() {
         try {
-            addNewInstructionInQueue();
             removeOlderInstructionsCommited();
             tryCommitInstructions();
             dispatchFromReservationStationInstructions();
             addInstructionsAndReservationStation();
+            addNewInstructionInQueue();
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -47,15 +47,17 @@ public class TomasuloController {
             //Full the instructionQueue and ReorderBuffer
             int instructionQueueSize = InstructionQueueController.instructionQueue.getInstructionQueueSize();
             int arquiveSize = ArquiveController.getArquiveSize();
-            for (int i = instructionQueueSize; i < Definitions.TAM_INSTRUCTION_QUEUE && i < arquiveSize; i++) {
-                Instruction instructionArquive = ArquiveController.getFirstIntruction();
-                int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
-                InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));
-                ReorderBufferController.reorderBuffer.add(instructionArquive, indexQueueInstruction);
-            }
-            //Set register reorder buffer destination
-            for (int i = instructionQueueSize; i < Definitions.TAM_BUFFER_INSTRUCTION && i < ReorderBufferController.reorderBuffer.size(); i++) {
-                ReorderBufferController.reorderBuffer.getIndex(i).getRegisterDestination().setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(i));
+            if (ReorderBufferController.reorderBuffer.size() < Definitions.TAM_BUFFER_INSTRUCTION && arquiveSize != 0) {
+                for (int i = instructionQueueSize; i < Definitions.TAM_INSTRUCTION_QUEUE && i <= arquiveSize; i++) {
+                    Instruction instructionArquive = ArquiveController.getFirstIntruction();
+                    int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
+                    InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));
+                    ReorderBufferController.reorderBuffer.add(instructionArquive, indexQueueInstruction);
+                }
+                //Set register reorder buffer destination
+                for (int i = instructionQueueSize; i < Definitions.TAM_BUFFER_INSTRUCTION && i < ReorderBufferController.reorderBuffer.size(); i++) {
+                    ReorderBufferController.reorderBuffer.getIndex(i).getRegisterDestination().setBufferInstruction(ReorderBufferController.reorderBuffer.getIndex(i));
+                }
             }
         }
     }

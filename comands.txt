@@ -1,3 +1,6 @@
 add r1,r2,r3
-sub r2,r3,r4
+sub r6,r3,r4
 mul r2,r1,r9
+xor r5,r1,r2
+or r8,r6,r9
+and r9,r9,r9
