@@ -25,7 +25,7 @@ public class ReorderBuffer {
     }
 
     public BufferInstruction[] getBufferInstructions() {
-        return (BufferInstruction[]) this.reorderBuffer.toArray();
+        return this.reorderBuffer.toArray(new BufferInstruction[0]);
     }
 
     public BufferInstruction getIndex(int index) {
