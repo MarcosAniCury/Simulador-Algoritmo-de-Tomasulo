@@ -46,7 +46,8 @@ public class TomasuloController {
         if (InstructionQueueController.instructionQueue.getInstructionQueueSize() < Definitions.TAM_INSTRUCTION_QUEUE) {
             //Full the instructionQueue and ReorderBuffer
             int instructionQueueSize = InstructionQueueController.instructionQueue.getInstructionQueueSize();
-            for (int i = instructionQueueSize; i < Definitions.TAM_INSTRUCTION_QUEUE && i < ArquiveController.getArquiveSize(); i++) {
+            int arquiveSize = ArquiveController.getArquiveSize();
+            for (int i = instructionQueueSize; i < Definitions.TAM_INSTRUCTION_QUEUE && i < arquiveSize; i++) {
                 Instruction instructionArquive = ArquiveController.getFirstIntruction();
                 int indexQueueInstruction = InstructionQueueController.instructionQueue.getInstructionQueueSize();
                 InstructionQueueController.instructionQueue.add(new QueueInstruction(instructionArquive, indexQueueInstruction));

@@ -1,29 +1,18 @@
-import Controller.InstructionQueueController;
+import java.util.Scanner;
+
 import Controller.TomasuloController;
-import Model.Instruction;
-import Model.Tomasulo;
-
-
-import javax.swing.SwingUtilities;
-
+import Controller.ReorderBufferController;
 
 public final class App {
 
     public static void main(String[] args) {
-
         TomasuloController.setupTomasulo("comands.txt");        
+    
+        while (ReorderBufferController.reorderBuffer.size() > 0) {
+            Scanner scanner = new Scanner(System.in);
 
-        for (Instruction i : InstructionQueueController.getAllInstructions()) {
-            
-            System.out.println(i);
-            
+            String next = scanner.nextLine();
+            TomasuloController.nextStep();
         }
-
-
-        SwingUtilities.invokeLater(() -> {
-            Tomasulo t = new Tomasulo();
-            t.setVisible(true);
-        });
-
-    }
+    }   
 }
