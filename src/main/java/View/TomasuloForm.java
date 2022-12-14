@@ -2,20 +2,19 @@ package View;
 
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.util.List;
+
+
 import java.awt.Color;
 
 
-import javax.swing.BoxLayout;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Controller.ArquiveController;
-import Controller.InstructionQueueController;
+
 import Model.Instruction;
 
 
@@ -72,7 +71,7 @@ public abstract class TomasuloForm extends JFrame{
         if (sideBar == null){
             
             sideBar = new JPanel(new GridBagLayout());
-            GridBagConstraints c = new GridBagConstraints();
+            // GridBagConstraints c = new GridBagConstraints();
             sideBar.setBackground(Color.GREEN);                 
             
             //sideBar.setLayout(new BoxLayout(sideBar, BoxLayout.PAGE_AXIS));            
