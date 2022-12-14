@@ -34,9 +34,9 @@ public class TomasuloController {
         try {
             addNewInstructionInQueue();
             addInstructionsAndReservationStation();
-            dispatchFromReservationStationInstructions();
             removeOlderInstructionsCommited();
             tryCommitInstructions();
+            dispatchFromReservationStationInstructions();
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -67,7 +67,7 @@ public class TomasuloController {
             String registerReadTwoName = instructions[i].getOption3();
 
             if (!verifyIfInstructionHasDependencie(registerReadOneName, registerReadTwoName)) {
-                addInReservationStation(instructions[i], registerReadOneName, registerReadTwoName, i);
+                addInReservationStation(instructions[i], registerReadOneName, registerReadTwoName);
             }
         }
     }
@@ -86,7 +86,7 @@ public class TomasuloController {
         return false;
     }
 
-    private static void addInReservationStation(Instruction instruction, String registerReadOneName, String registerReadTwoName, int reorderBufferIndex) throws Exception {
+    private static void addInReservationStation(Instruction instruction, String registerReadOneName, String registerReadTwoName) throws Exception {
         String registerWriteName = instruction.getOption1();
         TypeEnum instructionReservationStationType = ReservationStationController.findTypeEnumBaseInstruction(instruction.getInstruction());
         InstructionsEnum instructionType = InstructionController.findInstructionEnumBasedInInstructionName(instruction.getInstruction());
@@ -98,7 +98,7 @@ public class TomasuloController {
             RegisterController.findRegisterBasedInName(registerReadTwoName),
             instruction
         );
-        ReorderBufferController.reorderBuffer.getIndex(reorderBufferIndex).setState(StateEnum.execute);
+        ReorderBufferController.reorderBuffer.getIndex(ReorderBufferController.reorderBuffer.findIndexBasedInInstruction(instruction)).setState(StateEnum.execute);
         InstructionQueueController.instructionQueue.remove(InstructionQueueController.instructionQueue.findIndexBasedInInstruction(instruction));
     }
 
@@ -126,7 +126,7 @@ public class TomasuloController {
 
                     if (reservationStationInstructions[i].getRegisterOne() != null && reservationStationInstructions[i].getRegisterTwo() != null) {
                         reservationStationInstructions[i].getRegisterTarget().setValue(executeInstruction(reservationStationInstructions[i]));
-                        reservationStationInstructions[i].getRegisterTarget().getBufferInstruction().setState(StateEnum.write_result);
+                        ReorderBufferController.reorderBuffer.getIndex(ReorderBufferController.reorderBuffer.findIndexBasedInInstruction(reservationStationInstructions[i].getInstruction())).setState(StateEnum.write_result);
                         ReservationStationController.allReservationsArea.get(reservationStation.getType()).remove(reservationStation.findIndexBasedInInstruction(reservationStationInstructions[i].getInstruction()));
                     }
                 }
@@ -144,16 +144,16 @@ public class TomasuloController {
     }
 
     private static int executeInstruction(ReservationStationInstruction reservationStationInstruction) throws Exception {
-        InstructionsEnum instructionType = reservationStationInstruction.getInstructionType();
-        if (Arrays.stream(Instructions.LOGIC).anyMatch(item -> item.equals(instructionType.toString()))) {
+        String instructionType = reservationStationInstruction.getInstructionType().toString().toLowerCase();
+        if (Arrays.stream(Instructions.LOGIC).anyMatch(item -> item.equals(instructionType))) {
             return InstructionController.LogicInstructionExecute(reservationStationInstruction);
-        } else if (Arrays.stream(Instructions.ARITIMETIC).anyMatch(item -> item.equals(instructionType.toString()))) {
+        } else if (Arrays.stream(Instructions.ARITIMETIC).anyMatch(item -> item.equals(instructionType))) {
             return InstructionController.AritimeticInstructionExecute(reservationStationInstruction);
-        } else if (Arrays.stream(Instructions.MULT).anyMatch(item -> item.equals(instructionType.toString()))) {
+        } else if (Arrays.stream(Instructions.MULT).anyMatch(item -> item.equals(instructionType))) {
             return InstructionController.MultInstructionExecute(reservationStationInstruction);
-        } else if (Arrays.stream(Instructions.DETOUR).anyMatch(item -> item.equals(instructionType.toString()))) {
+        } else if (Arrays.stream(Instructions.DETOUR).anyMatch(item -> item.equals(instructionType))) {
             return InstructionController.BeqInstructionExecute(reservationStationInstruction);
-        } else if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(instructionType.toString()))) {
+        } else if (Arrays.stream(Instructions.LOAD_STORE).anyMatch(item -> item.equals(instructionType))) {
             return InstructionController.LoadStoreInstructionExecute(reservationStationInstruction);
         }
         return -1;
