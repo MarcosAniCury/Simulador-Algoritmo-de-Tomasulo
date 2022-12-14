@@ -1,12 +1,12 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-import Controller.InstructionQueueController;
+
 import Controller.RegisterController;
 import Controller.ReorderBufferController;
 import Controller.TomasuloController;
 import Model.BufferInstruction;
-import Model.QueueInstruction;
+
 import Model.Register;
 import Constants.Definitions;
 import Constants.Instructions;
@@ -110,26 +110,30 @@ public final class App {
             System.out.println(
                     "------------------------------------------------------------------------------------------");
 
-            System.out.println("Field \t F0 \t F1 \t F2 \t F3 \t F4 \t F5 \t F6 \t F7 \t F8 \t F9 \t F10");
+            System.out.println("Field \t  F0 \t F1 \t F2 \t F3 \t F4 \t F5 \t F6 \t F7 \t F8 \t F9");
             System.out.print("Reorder#");
             
-            Register [] r = RegisterController.registers;
+            Register [] r = RegisterController.registers;        
 
-
-        //     BufferInstruction[] in = ReorderBufferController.reorderBuffer.getBufferInstructions();
-
-            for (int i = 0; i < 1; i++) {
-                System.out.print("  " + r[i].bufferInstruction.getRegisterDestination().getName());
-                System.out.print("");
-                System.out.print("");
-                System.out.print("");
-                System.out.print("");
-                System.out.print("");
-                System.out.print("\n");
+            for (int i = 0; i < 10; i++) {
+                if(r[i].bufferInstruction == null) System.out.print("");
+                else
+                    try {
+                        System.out.print(" #" + ReorderBufferController.reorderBuffer.findIndexBasedInInstruction(r[i].bufferInstruction.getInstruction()));
+                    } catch (Exception e) {                        
+                        e.printStackTrace();
+                    }                
+                System.out.print("\t");
             }
 
-            System.out.println("Busy");
-            System.out.println("------------------------------------------------------------------------------------------");   
+            System.out.print("\nBusy\t  ");
+
+            for (int i = 0; i < 10; i++) {
+                if(r[i].bufferInstruction == null) System.out.print("No");
+                else System.out.print("yes");                
+                System.out.print("\t");
+            }            
+            System.out.println("\n------------------------------------------------------------------------------------------");   
             System.out.println("\n");
 
             String next = scanner.nextLine();

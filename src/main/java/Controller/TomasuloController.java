@@ -9,7 +9,6 @@ import Constants.Instructions.InstructionsEnum;
 import Constants.ReservationStation.TypeEnum;
 import Model.BufferInstruction;
 import Model.Instruction;
-import Model.InstructionQueue;
 import Model.QueueInstruction;
 import Model.Register;
 import Model.ReservationStation;
